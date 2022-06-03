@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello, world</title>
+  </head>
+  <body>
+    <h1>{{ lists[0].writer }}</h1>
+    <h2>投稿数：{{ count.allcount }}</h2>
+    {% for list in lists %}
+    <p>{{ list.global_point }}pt : {{ list.title }}</p>
+    {% endfor %}
+  </body>
+</html>
