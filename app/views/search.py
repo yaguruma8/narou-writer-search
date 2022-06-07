@@ -4,7 +4,7 @@ import json
 from urllib.parse import quote
 
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request
 
 bp = Blueprint('search', __name__)
 
@@ -19,6 +19,7 @@ def search():
     # todo:エラー処理
     # クエリパラメータを取得
     q = request.args.get('q')
+    #
     # なろうユーザ検索APIにリクエスト
     params = {'out': 'json', 'gzip': 5, 'minnovel': 1, 'word': quote(q)}
     url = 'https://api.syosetu.com/userapi/api/'
@@ -34,7 +35,7 @@ def search():
 def writer(writer_id):
     # todo: エラー処理
     # なろう小説APIにリクエスト
-    params = {'out': 'json', 'gzip': 5, 'order': 'hyoka', 'userid': writer_id}
+    params = {'out': 'json', 'gzip': 5, 'order': 'hyoka', 'userid': writer_id }
     url = 'https://api.syosetu.com/novelapi/api/'
     content = requests.get(url=url, params=params).content
     data = gzip.decompress(content).decode("utf-8")
