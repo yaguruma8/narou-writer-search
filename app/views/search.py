@@ -26,10 +26,19 @@ def search():
     data = gzip.decompress(content).decode("utf-8")
     lists = json.loads(data)
     count = lists.pop(0)
-    
+
     return render_template('search.html', writer=writer, count=count['allcount'], lists=lists)
 
 
 @bp.get('/writer/<int:writer_id>')
 def writer(writer_id):
-    return render_template('writer.html', writer_id=writer_id)
+    # todo: エラー処理
+    # なろう小説APIにリクエスト
+    params = {'out': 'json', 'gzip': 5, 'order': 'hyoka', 'userid': writer_id}
+    url = 'https://api.syosetu.com/novelapi/api/'
+    content = requests.get(url=url, params=params).content
+    data = gzip.decompress(content).decode("utf-8")
+    lists = json.loads(data)
+    count = lists.pop(0)
+
+    return render_template('writer.html', writer_id=writer_id, lists=lists, count=count)
