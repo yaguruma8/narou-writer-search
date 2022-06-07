@@ -18,16 +18,16 @@ def index():
 def search():
     # todo:エラー処理
     # クエリパラメータを取得
-    writer = request.args.get('writer')
+    q = request.args.get('q')
     # なろうユーザ検索APIにリクエスト
-    params = {'out': 'json', 'gzip': 5, 'minnovel': 1, 'word': quote(writer)}
+    params = {'out': 'json', 'gzip': 5, 'minnovel': 1, 'word': quote(q)}
     url = 'https://api.syosetu.com/userapi/api/'
     content = requests.get(url=url, params=params).content
     data = gzip.decompress(content).decode("utf-8")
     lists = json.loads(data)
     count = lists.pop(0)
 
-    return render_template('search.html', writer=writer, count=count['allcount'], lists=lists)
+    return render_template('search.html', q=q, count=count['allcount'], lists=lists)
 
 
 @bp.get('/writer/<int:writer_id>')
