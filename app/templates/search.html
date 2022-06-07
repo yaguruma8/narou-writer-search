@@ -21,10 +21,10 @@
       <h2>{{ list.name }}<span>({{ list.yomikata }})</span></h2>
     </a>
     <ul>
-      <li>ID: {{ list.userid}}</li>
-      <li>投稿数: {{ '{:,}'.format(list.novel_cnt) }} 作品</li>
-      <li>文字数: {{ '{:,}'.format(list.novel_length) }} 字</li>
-      <li>総合評価ポイント: {{'{:,}'.format(list.sum_global_point) }} pt</li>
+      <li>ID: {{ list.userid }}</li>
+      <li>投稿数: {{ list.novel_cnt | comma }} 作品</li>
+      <li>文字数: {{ list.novel_length | comma }} 字</li>
+      <li>総合評価ポイント: {{ list.sum_global_point | comma }} pt</li>
     </ul>
     <p>{{ list }}</p>
   {% endfor %}

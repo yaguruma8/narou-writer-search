@@ -9,6 +9,10 @@ def create_app():
     app.register_blueprint(search.bp)
     app.add_url_rule('/', endpoint='index')
 
+    @app.template_filter('comma')
+    def comma_filter(str):
+        return '{:,}'.format(str)
+
     return app
 
 
