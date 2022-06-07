@@ -4,13 +4,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>作者の作品一覧</title>
+  <title>{{ lists[0].writer }} の作品一覧 | なろう作者作品検索(仮)</title>
 </head>
 <body>
-  <h1>{{ lists[0].writer }} の作品の一覧</h1>
+
+  <div>
+    <h1>
+      <a href="{{ url_for('search.index') }}">
+        なろう作者作品検索(仮)
+      </a>
+    </h1>
+    <form action="/search" method="get">
+      <input type="text" name="q" value="{{ q }}">
+      <button type="submit">search</button>
+    </form>
+  </div>
+
+  <h2>{{ lists[0].writer }} の作品一覧</h2>
   <p>id: {{ writer_id }}</p>
   {% for list in lists %}
-    <a href="https://ncode.syosetu.com/{{ list.ncode }}" target="_blank">
+    <a href="https://ncode.syosetu.com/{{ list.ncode | lower }}" target="_blank">
       <h2>{{ list.title }}</h2>
     </a>
     <p>{{ list.story }}</p>

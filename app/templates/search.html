@@ -4,18 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Result</title>
+  <title>{{ q }} の検索結果 | なろう作者作品検索(仮)</title>
 </head>
 <body>
 
   <div>
+    <h1>
+      <a href="{{ url_for('search.index') }}">
+        なろう作者作品検索(仮)
+      </a>
+    </h1>
     <form action="/search" method="get">
       <input type="text" name="q" value="{{ q }}">
       <button type="submit">search</button>
     </form>
   </div>
 
-  <h2>{{ q }} の検索結果 ({{ count }}件)</h2>
+  <h2>{{ q }} の検索結果 ({{ count | comma }}件)</h2>
   {% for list in lists %}
     <a href="{{ url_for('search.writer', writer_id=list.userid) }}"
       <h2>{{ list.name }}<span>({{ list.yomikata }})</span></h2>
