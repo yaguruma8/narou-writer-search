@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello, world</title>
+    <title>Narou Writer Search</title>
   </head>
   <body>
-    <h1>{{ lists[0].writer }}</h1>
-    <h2>投稿数：{{ count.allcount }}</h2>
-    {% for list in lists %}
-    <p>{{ list.global_point }}pt : {{ list.title }}</p>
-    {% endfor %}
+    <h1>Hello, Narou Writer Search!</h1>
+    <form action="/search" method="get">
+      <input type="text" name="writer" value="{{ writer }}">
+      <button type="submit">search</button>
+    </form>
   </body>
 </html>
