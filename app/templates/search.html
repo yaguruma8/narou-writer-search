@@ -22,7 +22,8 @@
 
   <h2>{{ q }} の検索結果 ({{ count | comma }}件)</h2>
   {% for list in lists %}
-    <a href="{{ url_for('search.writer', writer_id=list.userid) }}"
+    <a href="{{ url_for('writer.result', writer_id=list.userid) }}">
+      
       <h2>{{ list.name }}<span>({{ list.yomikata }})</span></h2>
     </a>
     <ul>

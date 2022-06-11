@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ lists[0].writer }} の作品一覧 | なろう作者作品検索(仮)</title>
+  <title>{{ names.name }} の作品一覧 | なろう作者作品検索(仮)</title>
 </head>
 <body>
 
@@ -20,16 +20,27 @@
     </form>
   </div>
 
-  <h2>{{ lists[0].writer }} の作品一覧</h2>
-  <p>id: {{ writer_id }}</p>
+  <h2>{{ names.name }}({{names.yomikata}}) の作品一覧</h2>
+  <p>id: {{ lists[0].userid }}</p>
+  <div>作品数: {{ count }}件 (500件まで表示)</div>
   {% for list in lists %}
     <a href="https://ncode.syosetu.com/{{ list.ncode | lower }}" target="_blank">
-      <h2>{{ list.title }}</h2>
+      <div>{{ list.title }}</div>
     </a>
+    <div>総合ポイント : {{ list.global_point | comma }}pt</div>
+    <div>ブックマーク : {{ list.fav_novel_cnt | comma }}件</div>
+    <div>{{ list.length| comma }}文字</div>
+    <div>{{ list.keyword }}</div>
     <p>{{ list.story }}</p>
-    <p>{{ list }}</p>
+    {# <p>{{ list }}</p> #}
+    <hr />
   {% endfor %}
 
   {# <p>{{ lists }}</p> #}
+  <script>
+    'use strict';
+
+    console.log({{ lists | tojson }})
+  </script>
 </body>
 </html>
