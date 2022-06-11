@@ -11,6 +11,7 @@ bp = Blueprint('writer', __name__)
 
 @bp.get('/')
 def index():
+    # writer_idがない場合
     return redirect(url_for('search.index'))
 
 
@@ -25,7 +26,7 @@ def result(writer_id):
     lists = get_writer_works(writer_id)
     count = lists.pop(0)
 
-    return render_template('writer.html', names=names, lists=lists, count=count['allcount'])
+    return render_template('writer.html', names=names, writer_id=writer_id, lists=lists, count=count['allcount'])
 
 
 def get_writer_works(writer_id):

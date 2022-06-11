@@ -36,11 +36,15 @@
     <hr />
   {% endfor %}
 
-  {# <p>{{ lists }}</p> #}
+  <p id="datalists" data-lists='{{ lists | tojson }}'></p>
+  <p id="writerid" data-writerid='{{ writer_id }}'></p>
   <script>
     'use strict';
-
-    console.log({{ lists | tojson }})
+    const el = document.querySelector('#datalists');
+    const data = JSON.parse(el.dataset.lists)
+    const wid = document.querySelector('#writerid').dataset.writerid
+    console.log(data)
+    console.log(wid)
   </script>
 </body>
 </html>
