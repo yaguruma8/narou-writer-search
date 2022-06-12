@@ -26,7 +26,7 @@ def result(writer_id):
     lists = get_writer_works(writer_id)
     count = lists.pop(0)
 
-    return render_template('writer.html', names=names, writer_id=writer_id, lists=lists, count=count['allcount'])
+    return render_template('writer/index.html', names=names, writer_id=writer_id, lists=lists, count=count['allcount'])
 
 
 def get_writer_works(writer_id):

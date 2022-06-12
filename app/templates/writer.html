@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <div>
+  <header>
     <h1>
       <a href="{{ url_for('search.index') }}">
         なろう作者作品検索(仮)
@@ -18,7 +18,7 @@
       <input type="text" name="q" value="{{ q }}">
       <button type="submit">search</button>
     </form>
-  </div>
+  </header>
 
   <h2>{{ names.name }}({{names.yomikata}}) の作品一覧</h2>
   <p>id: {{ lists[0].userid }}</p>
@@ -36,15 +36,15 @@
     <hr />
   {% endfor %}
 
-  <p id="datalists" data-lists='{{ lists | tojson }}'></p>
+  {# <p id="datalists" data-lists='{{ lists | tojson }}'></p>
   <p id="writerid" data-writerid='{{ writer_id }}'></p>
   <script>
     'use strict';
     const el = document.querySelector('#datalists');
     const data = JSON.parse(el.dataset.lists)
-    const wid = document.querySelector('#writerid').dataset.writerid
     console.log(data)
+    const wid = document.querySelector('#writerid').dataset.writerid
     console.log(wid)
-  </script>
+  </script> #}
 </body>
 </html>
