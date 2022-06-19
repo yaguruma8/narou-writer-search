@@ -17,35 +17,10 @@
   
   <div id="works-count"></div>
   <div id="works-genre"></div>
+  <div id="works-keywords"></div>
   <div id="works-list"></div>
   
   </div>
-{# 
-  <p>id: {{ lists[0].userid }}</p>
-  <div>作品数: {{ count }}件 (500件まで表示)</div>
-   #}
-{#    
-  {% for list in lists %}
-    <a href="https://ncode.syosetu.com/{{ list.ncode | lower }}" target="_blank">
-      <div>{{ list.title }}</div>
-    </a>
-    <div>総合ポイント : {{ list.global_point | comma }}pt</div>
-    <div>ブックマーク : {{ list.fav_novel_cnt | comma }}件</div>
-    <div>{{ list.length| comma }}文字</div>
-    <div>{{ list.keyword }}</div>
-    <p>{{ list.story }}</p>
-    <hr />
-  {% endfor %}
- #}
-  {# <p id="datalists" data-lists='{{ lists | tojson }}'></p>
-  <p id="writerid" data-writerid='{{ writer_id }}'></p>
-  <script>
-    'use strict';
-    const el = document.querySelector('#datalists');
-    const data = JSON.parse(el.dataset.lists)
-    console.log(data)
-    const wid = document.querySelector('#writerid').dataset.writerid
-    console.log(wid)
-  </script> #}
+
 </body>
 </html>

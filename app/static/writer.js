@@ -4,17 +4,36 @@ document.addEventListener('DOMContentLoaded', () => {
   // rootの取得
   const rootElement = document.querySelector('#root');
   // 作品一覧の取得(json)
-  (async () => {
-    const works = await fetch(`${location.pathname}/get`).then((res) =>
-      res.json()
-    );
-    // 作品数の表示
-    drawWorksCount(works);
-    drawGenre(works);
-    // 作品の表示
-    drawWorksList(works);
-  })();
+  main();
 });
+
+async function main() {
+  try {
+    const works = await fetchWorksData();
+    // 作品数
+    drawWorksCount(works);
+    // 作品ジャンル
+    drawGenre(works);
+    // 作品一覧
+    drawWorksList(works);
+    // todo
+    // 短編・連載・完結済
+    // 頻出キーワード
+    checkKeyword(works);
+  } catch (e) {
+    console.error(`エラーが発生しました: ${e}`);
+  }
+}
+
+function fetchWorksData() {
+  return fetch(`${location.pathname}/get`).then((res) => {
+    if (!res.ok) {
+      Promise.reject(new Error(`${res.status} : ${res.statusText}`));
+    } else {
+      return res.json();
+    }
+  });
+}
 
 // 作品数の表示
 function drawWorksCount(works) {
@@ -74,8 +93,14 @@ function drawGenre(works) {
 
 // 各作品の表示
 function drawWorksList(works) {
+  const novelTypeMap = new Map([
+    ['20', '短編'],
+    ['10', '完結済'],
+    ['11', '連載'],
+  ]);
   const [count, ...lists] = works;
-  console.log(lists);
+  // console.log(lists);
+
   const worksList = document.getElementById('works-list');
   for (const list of lists) {
     const work = element`
@@ -85,8 +110,7 @@ function drawWorksList(works) {
     }</a></div>
       <div>${list.global_point.toLocaleString()}pt</div>
       <div>${list.length.toLocaleString()}文字</div>
-      <div>${list.novel_type===1?'連載':'短編'}
-      <div>${list.novel_type===1&&list.end === 0?'完結済':''}
+      <div>${novelTypeMap.get(String(list.novel_type) + String(list.end))}</div>
       <div>ブックマーク : ${list.fav_novel_cnt.toLocaleString()}</div>
       <div>最終更新日 : ${list.general_lastup}</div>
       <div>${list.keyword}</div>
@@ -95,6 +119,35 @@ function drawWorksList(works) {
     `;
     worksList.appendChild(work);
   }
+}
+
+// 頻出キーワードをチェックする
+function checkKeyword(works) {
+  const [count, ...lists] = works;
+  const keywords = new Map();
+  for (const list of lists) {
+    const keywordArray = list.keyword.split(' ');
+    for (const keyword of keywordArray) {
+      if (!keywords.has(keyword)) {
+        keywords.set(keyword, 1);
+      } else {
+        const count = keywords.get(keyword);
+        keywords.set(keyword, count + 1);
+      }
+    }
+  }
+  // 2個以上あるキーワードを取り出して多い順にソートする
+  const kw2 = [...keywords.entries()]
+    .filter((v) => v[1] > 1)
+    .sort((a, b) => (a[1] > b[1] ? -1 : 1));
+  // console.log(kw2)
+  const kw3 = kw2.reduce((result, word) => {
+    result += `${word[0]}(${word[1]}) `;
+    return result;
+  }, '');
+  // console.log(kw3);
+  const keywordsContainer = document.getElementById('works-keywords')
+  keywordsContainer.textContent = kw3;
 }
 
 // 文字列のエスケープ
