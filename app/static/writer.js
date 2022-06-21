@@ -19,7 +19,7 @@ async function main() {
     // todo
     // 短編・連載・完結済
     // 頻出キーワード
-    checkKeyword(works);
+    drawFrequentKeywords(works);
   } catch (e) {
     console.error(`エラーが発生しました: ${e}`);
   }
@@ -121,8 +121,8 @@ function drawWorksList(works) {
   }
 }
 
-// 頻出キーワードをチェックする
-function checkKeyword(works) {
+// 頻出キーワード
+function drawFrequentKeywords(works) {
   const [count, ...lists] = works;
   const keywords = new Map();
   for (const list of lists) {
