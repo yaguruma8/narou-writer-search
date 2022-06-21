@@ -1,0 +1,11 @@
+  <header>
+    <h1>
+      <a href="{{ url_for('search.index') }}">
+        なろう作者検索(仮)
+      </a>
+    </h1>
+    <form action="/search" method="get">
+      <input type="text" name="q" value="{{ q }}">
+      <button type="submit">search</button>
+    </form>
+  </header>

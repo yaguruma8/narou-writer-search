@@ -3,7 +3,7 @@ import gzip
 import json
 from time import sleep
 
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 
 
 bp = Blueprint('writer', __name__)
@@ -20,13 +20,11 @@ def result(writer_id):
     # todo: エラー処理
     # なろうユーザAPIからユーザー名の読み方取得
     names = get_writer_names(writer_id)
+    return render_template('writer.html', names=names, writer_id=writer_id)
 
-    # sleep(1)
-    # なろう小説APIにリクエスト
-    lists = get_writer_works(writer_id)
-    count = lists.pop(0)
-
-    return render_template('writer/index.html', names=names, writer_id=writer_id, lists=lists, count=count['allcount'])
+@bp.get('/<int:writer_id>/get')
+def result_json(writer_id):
+    return jsonify(get_writer_works(writer_id))
 
 
 def get_writer_works(writer_id):
@@ -46,5 +44,4 @@ def get_writer_names(writer_id):
     url = 'https://api.syosetu.com/userapi/api/'
     content = requests.get(url=url, params=params).content
     data = gzip.decompress(content).decode("utf-8")
-    # print(data)
     return json.loads(data)[1]

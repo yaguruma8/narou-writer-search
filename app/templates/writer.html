@@ -4,47 +4,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ names.name }} の作品一覧 | なろう作者作品検索(仮)</title>
+  <script defer src="{{ url_for('static', filename='writer.js') }}" type="module"></script>
+  <title>{{ names.name }} の作品一覧 | なろう作者検索(仮)</title>
 </head>
 <body>
 
-  <header>
-    <h1>
-      <a href="{{ url_for('search.index') }}">
-        なろう作者作品検索(仮)
-      </a>
-    </h1>
-    <form action="/search" method="get">
-      <input type="text" name="q" value="{{ q }}">
-      <button type="submit">search</button>
-    </form>
-  </header>
+  {% include 'parts/header.html' %}
 
   <h2>{{ names.name }}({{names.yomikata}}) の作品一覧</h2>
-  <p>id: {{ lists[0].userid }}</p>
-  <div>作品数: {{ count }}件 (500件まで表示)</div>
-  {% for list in lists %}
-    <a href="https://ncode.syosetu.com/{{ list.ncode | lower }}" target="_blank">
-      <div>{{ list.title }}</div>
-    </a>
-    <div>総合ポイント : {{ list.global_point | comma }}pt</div>
-    <div>ブックマーク : {{ list.fav_novel_cnt | comma }}件</div>
-    <div>{{ list.length| comma }}文字</div>
-    <div>{{ list.keyword }}</div>
-    <p>{{ list.story }}</p>
-    {# <p>{{ list }}</p> #}
-    <hr />
-  {% endfor %}
+  <a href="https://mypage.syosetu.com/mypage/top/userid/{{ writer_id }}/">小説家になろうマイページ</a>
 
-  {# <p id="datalists" data-lists='{{ lists | tojson }}'></p>
-  <p id="writerid" data-writerid='{{ writer_id }}'></p>
-  <script>
-    'use strict';
-    const el = document.querySelector('#datalists');
-    const data = JSON.parse(el.dataset.lists)
-    console.log(data)
-    const wid = document.querySelector('#writerid').dataset.writerid
-    console.log(wid)
-  </script> #}
+  <div id="root">
+  
+  <div id="works-count"></div>
+  <div id="works-genre"></div>
+  <div id="works-keywords"></div>
+  <div id="works-list"></div>
+  
+  </div>
+
 </body>
 </html>
