@@ -22,7 +22,7 @@ def search():
     #
     # なろうユーザ検索APIにリクエスト
     params = {'out': 'json', 'gzip': 5,
-              'minnovel': 1, 'word': quote(q), 'lim': 500}
+              'minnovel': 1, 'word': quote(q), 'lim': 50}
     url = 'https://api.syosetu.com/userapi/api/'
     content = requests.get(url=url, params=params).content
     data = gzip.decompress(content).decode("utf-8")
