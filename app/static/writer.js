@@ -136,18 +136,23 @@ function drawFrequentKeywords(works) {
       }
     }
   }
-  // 2個以上あるキーワードを取り出して多い順にソートする
-  const kw2 = [...keywords.entries()]
-    .filter((v) => v[1] > 1)
-    .sort((a, b) => (a[1] > b[1] ? -1 : 1));
-  // console.log(kw2)
-  const kw3 = kw2.reduce((result, word) => {
-    result += `${word[0]}(${word[1]}) `;
-    return result;
-  }, '');
-  // console.log(kw3);
-  const keywordsContainer = document.getElementById('works-keywords')
-  keywordsContainer.textContent = kw3;
+
+  let filterKeywords = [...keywords.entries()];
+    for (let i = 1; i < 10; i++) {
+      filterKeywords = filterKeywords.filter((v) => v[1] > i);
+      if (filterKeywords.length <= 40) {
+        break;
+      }
+    }
+  const filterKeywordsText = filterKeywords
+    .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+    .reduce((result, word) => {
+      result += `${word[0]}(${word[1]}) `;
+      return result;
+    }, '');
+
+  const keywordsContainer = document.getElementById('works-keywords');
+  keywordsContainer.textContent = filterKeywordsText;
 }
 
 // 文字列のエスケープ
